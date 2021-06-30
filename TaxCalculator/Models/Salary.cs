@@ -7,6 +7,8 @@
 
     public class Salary : ISalary
     {
+        private decimal grossAmount;
+
         public Salary(decimal grossSalary)
         {
             this.IncomeTax = CalculateTaxAmount(grossSalary,
@@ -18,13 +20,25 @@
             this.GrossAmount = grossSalary;
         }
 
-        public decimal IncomeTax { get; }
+        public decimal IncomeTax { get; private set; }
 
-        public decimal SocialCotribution { get; }
+        public decimal SocialCotribution { get; private set; }
 
-        public decimal NetAmount { get; }
+        public decimal NetAmount { get; private set; }
 
-        public decimal GrossAmount { get; }
+        public decimal GrossAmount
+        {
+            get { return this.grossAmount; }
+            private set
+            {
+                if (!GetIsValidGrossSalary(value))
+                {
+                    throw new InvalidOperationException(ExceptionMessages.InvalidSalary);
+                }
+
+                this.grossAmount = value;
+            }
+        }
 
         /// <summary>
         /// Calculating the amount of the tax, based on gross salary and tax rate.
@@ -39,7 +53,7 @@
                 ? GetBaseAmountForIncomeTax(grossSalary)
                 : GetBaseAmountForSocialContribution(grossSalary);
 
-            if (taxableAmount <= GrossSalaryConstants.MinTaxableAmount)
+            if (grossSalary <= GrossSalaryConstants.MinTaxableAmount)
             {
                 taxAmount = 0;
             }
@@ -107,18 +121,6 @@
             decimal incomeTax, decimal socialCotribution)
         {
             return grossSalary - incomeTax - socialCotribution;
-        }
-
-        /// <summary>
-        /// Validating gross salary passed by paramether.
-        /// </summary>
-        /// <param name="grossSalary"></param>
-        public static void ValidateGrossSalary(decimal grossSalary)
-        {
-            if (!GetIsValidGrossSalary(grossSalary))
-            {
-                throw new InvalidOperationException(ExceptionMessages.InvalidSalary);
-            }
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
     public class Employee : IEmployee
     {
         private string name;
-        private ISalary salary;
 
         public Employee(string name, ISalary salary)
         {
@@ -28,18 +27,6 @@
             }
         }
 
-        public ISalary Salary 
-        {
-            get { return this.salary; }
-            private set
-            {
-                if (value.GrossAmount <= 0)
-                {
-                    throw new ArgumentException(ExceptionMessages.InvalidName);
-                }
-
-                this.salary = value;
-            }
-        }
+        public ISalary Salary { get; private set; }
     }
 }

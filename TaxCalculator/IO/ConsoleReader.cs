@@ -2,7 +2,8 @@
 {
     using System;
     using TaxCalculator.IO.Contracts;
-    class ConsoleReader : IReader
+
+    public class ConsoleReader : IReader
     {
         public string ReadLine()
         {

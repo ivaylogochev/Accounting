@@ -2,6 +2,7 @@
 {
     using System;
     using TaxCalculator.IO.Contracts;
+
     public class ConsoleWriter : IWriter
     {
         public void Write(string message)

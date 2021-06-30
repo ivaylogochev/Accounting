@@ -34,7 +34,6 @@
                     string employeeName = argumets[0];
                     decimal grossSalary = decimal.Parse(argumets[1]);
 
-                    Salary.ValidateGrossSalary(grossSalary);
                     ISalary salary = new Salary(grossSalary);
 
                     IEmployee employee = new Employee(employeeName, salary);
@@ -53,29 +52,14 @@
                 {
                     writer.WriteLine(ioe.Message);
                 }
+                catch (Exception e)
+                {
+                    writer.WriteLine(e.Message);
+                }
 
                 input = reader.ReadLine();
             }
         }
-
-        /// <summary>
-        /// Method for creating Employee instance from the customet input.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>Employee</returns>
-        //private Employee CreateEmployeeFromInput(string input)
-        //{
-        //    //Suggested input format: {name} {salary}
-        //    string[] argumets = input.Split();
-        //    string employeeName = argumets[0];
-        //    decimal grossSalary = decimal.Parse(argumets[1]);
-
-        //    //Salary.ValidateGrossSalary(grossSalary);
-
-        //    //ISalary salary = GetSalaryInstance(grossSalary);
-
-        //    //return new Employee(employeeName, salary);
-        //}
 
         /// <summary>
         /// Creating Salary instance.
